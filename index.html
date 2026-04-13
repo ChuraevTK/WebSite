@@ -2,31 +2,18 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=10.0, user-scalable=yes, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Хроники пластической хирургии | Эжен Знаменский</title>
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="stylesheet" href="css/style.css">
-    <style>
-        /* Настройки для разрешения вертикальной прокрутки страницы */
-        body {
-            touch-action: pan-y !important;
-            overflow-x: hidden;
-        }
-        .comic-swiper, .swiper-container {
-            touch-action: pan-y pinch-zoom !important;
-        }
-        .comic-slide img {
-            touch-action: auto !important;
-            cursor: default;
-        }
-    </style>
 </head>
 <body>
 <div id="app">
     <div class="site-header">
         <div class="header-inner">
             <div class="header-left">
-                <button class="burger-btn" id="burgerBtn">
+                <button class="burger-btn" id="burgerBtn" aria-label="Открыть меню">
                     <span class="burger-line"></span>
                     <span class="burger-line"></span>
                     <span class="burger-line"></span>
@@ -40,34 +27,44 @@
     </div>
 
     <div class="menu-overlay" id="menuOverlay"></div>
+
     <div class="side-menu" id="sideMenu">
-        <button class="menu-close" id="menuCloseBtn">
-            <img src="images/icons/крестик.svg" alt="✕" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2224%22 height=%2224%22 viewBox=%220 0 24 24%22 fill=%22%239a1a3a%22%3E%3Cpath d=%22M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z%22/%3E%3C/svg%3E'">
+        <button class="menu-close" id="menuCloseBtn" aria-label="Закрыть меню">
+            <img src="images/icons/крестик.svg" alt="✕"
+                 onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2224%22 height=%2224%22 viewBox=%220 0 24 24%22 fill=%22%239a1a3a%22%3E%3Cpath d=%22M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z%22/%3E%3C/svg%3E'">
         </button>
+
         <div class="menu-items">
             <div class="menu-item" id="homeMenuItem">
                 <img src="images/icons/Домик.svg" class="menu-icon" alt="🏠">
                 На главную
             </div>
+
             <div class="menu-item" id="newsMenuItem">
                 <img src="images/icons/Новости.svg" class="menu-icon" alt="📰">
                 Новости
             </div>
+
             <div class="menu-item" id="contactsMenuItem">
                 <img src="images/icons/Контакты.svg" class="menu-icon" alt="📬">
                 Контакты
             </div>
+
             <div class="menu-divider"></div>
+
             <div class="menu-lang-group" id="menuLangGroup">
                 <div class="menu-lang-option" data-lang="ru">RU</div>
                 <div class="menu-lang-option" data-lang="en">EN</div>
                 <div class="menu-lang-option" data-lang="de">DE</div>
             </div>
+
             <div class="menu-divider"></div>
+
             <div class="menu-item menu-theme" id="menuThemeItem">
                 <img src="images/icons/Системная тема.svg" class="menu-icon" id="themeIconImg" alt="Системная тема">
                 <span id="themeText">Системная тема</span>
             </div>
+
             <div class="menu-footer">© 2026 Эжен Знаменский<br>Все права защищены</div>
         </div>
     </div>
@@ -76,19 +73,27 @@
         <div class="main-container">
             <div class="controls-panel">
                 <div class="issue-selector" id="issueSelector">
-                    <div class="select-btn"><span id="selectedIssue">Выпуск 1</span><span class="arrow">▼</span></div>
+                    <div class="select-btn">
+                        <span id="selectedIssue">Выпуск 1</span>
+                        <span class="arrow">▼</span>
+                    </div>
                     <div class="select-dropdown" id="issueDropdown"></div>
                 </div>
+
                 <div class="chapter-selector" id="chapterSelector">
-                    <div class="select-btn"><span id="selectedChapter">Главы</span><span class="arrow">▼</span></div>
+                    <div class="select-btn">
+                        <span id="selectedChapter">Главы</span>
+                        <span class="arrow">▼</span>
+                    </div>
                     <div class="select-dropdown" id="chapterDropdown"></div>
                 </div>
             </div>
+
             <div class="comic-slider-container">
-                <div class="swiper-container comic-swiper" id="comicSwiper">
+                <div class="swiper comic-swiper" id="comicSwiper">
                     <div class="swiper-wrapper" id="swiperWrapper"></div>
-                    <div class="swiper-button-next"></div>
-                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-prev" aria-label="Предыдущая страница"></div>
+                    <div class="swiper-button-next" aria-label="Следующая страница"></div>
                     <div class="swiper-pagination"></div>
                 </div>
             </div>
@@ -99,11 +104,13 @@
         <div class="main-container">
             <div class="news-page">
                 <h2 id="newsTitle">Новости</h2>
+
                 <div class="news-item">
                     <h3 id="news1Title">Второй выпуск в разработке</h3>
                     <p id="news1Desc">Работа над продолжением идет полным ходом.</p>
                     <div class="news-date" id="news1Date">15 марта 2026</div>
                 </div>
+
                 <div class="news-item">
                     <h3 id="news2Title">Первый выпуск доступен для чтения</h3>
                     <p id="news2Desc">Все страницы первого выпуска уже на сайте.</p>
@@ -118,19 +125,23 @@
             <div class="contacts-page">
                 <h2 id="contactsTitle">Связь с автором</h2>
                 <p id="contactsDesc">Вопросы, предложения, отзывы — напишите мне!</p>
+
                 <div class="contacts-grid">
                     <a href="mailto:znamensky@example.com" class="contact-card">
                         <img src="images/icons/Почта.svg" alt="📧">
                         <span>Email</span>
                     </a>
+
                     <a href="https://t.me/znamensky" target="_blank" class="contact-card">
                         <img src="images/icons/Телеграм.svg" alt="💬">
                         <span>Telegram</span>
                     </a>
+
                     <a href="https://instagram.com/znamensky" target="_blank" class="contact-card">
                         <img src="images/icons/Инстаграм.svg" alt="📸">
                         <span>Instagram</span>
                     </a>
+
                     <a href="https://wa.me/71234567890" target="_blank" class="contact-card">
                         <img src="images/icons/Ватсап.svg" alt="📱">
                         <span>WhatsApp</span>
@@ -139,11 +150,13 @@
             </div>
         </div>
     </div>
-    <footer><p id="footerText">© 2026 Эжен Знаменский — медицинские хроники</p></footer>
+
+    <footer>
+        <p id="footerText">© 2026 Эжен Знаменский — медицинские хроники</p>
+    </footer>
 </div>
 
-<!-- Кнопка "В начало" -->
-<div class="scroll-to-top" id="scrollToTopBtn">В начало</div>
+<button class="scroll-to-top" id="scrollToTopBtn">В начало</button>
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script src="js/script.js"></script>
