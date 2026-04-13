@@ -343,30 +343,50 @@ function initSwiper(initialSlide = 0) {
         },
 
         on: {
-            init() {
-                checkScroll();
+            zoomChange: function (swiper, scale) {
+                const activeZoom = scale > 1.01;
+
+                swiper.allowTouchMove = !activeZoom;
+
+                if (activeZoom) {
+                    document.body.classList.add('stop-scrolling');
+                    swiper.el.classList.add('is-zooming');
+                } else {
+                    document.body.classList.remove('stop-scrolling');
+                    swiper.el.classList.remove('is-zooming');
+                    swiper.allowTouchMove = true;
+                }
             },
 
-            slideChange() {
-                checkScroll();
+            touchEnd: function () {
+                const swiper = this;
+
+                if (swiper._zoomResetTimer) {
+                    clearTimeout(swiper._zoomResetTimer);
+                }
+
+                if (swiper.zoom && swiper.zoom.scale > 1.01) {
+                    swiper._zoomResetTimer = setTimeout(() => {
+                        swiper.zoom.out();
+                        swiper.allowTouchMove = true;
+                        document.body.classList.remove('stop-scrolling');
+                        swiper.el.classList.remove('is-zooming');
+                    }, 180);
+                }
             },
 
-            transitionEnd() {
-                checkScroll();
-            },
+            slideChange: function () {
+                if (this._zoomResetTimer) {
+                    clearTimeout(this._zoomResetTimer);
+                }
 
-            zoomChange(swiper, scale) {
-                swiper.allowTouchMove = scale <= 1.01;
-            },
+                this.zoom.out();
+                this.allowTouchMove = true;
+                document.body.classList.remove('stop-scrolling');
+                this.el.classList.remove('is-zooming');
 
-            touchEnd(swiper) {
-                if (swiper.zoom && swiper.zoom.scale > 1) {
-                    setTimeout(() => {
-                        if (swiper.zoom && swiper.zoom.scale > 1) {
-                            swiper.zoom.out();
-                            swiper.allowTouchMove = true;
-                        }
-                    }, 90);
+                if (typeof checkScroll === 'function') {
+                    checkScroll();
                 }
             }
         }

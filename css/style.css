@@ -66,6 +66,19 @@ body {
     touch-action: pan-y;
 }
 
+body.stop-scrolling {
+    overflow: hidden;
+    touch-action: none;
+    overscroll-behavior: none;
+}
+
+.comic-swiper.is-zooming,
+.comic-swiper.is-zooming .swiper-slide,
+.comic-swiper.is-zooming .swiper-zoom-container,
+.comic-swiper.is-zooming img {
+    touch-action: none !important;
+}
+
 button {
     background: none;
     border: none;
@@ -702,12 +715,11 @@ footer {
     }
 
     .comic-slide {
-        padding: 8px 0 24px;
+        padding: 8px 0 24px 0;
     }
-
     .comic-slide img {
-        max-height: 78vh;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.14);
+        max-width: calc(100% - 10px);
+        max-height: 72vh;
     }
 
     .swiper-button-next,
@@ -722,20 +734,28 @@ footer {
     }
 
     .contacts-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         justify-items: center;
+        align-items: start;
+        gap: 16px;
+        padding: 20px 8px;
+        width: 100%;
+        margin: 0 auto;
     }
+
 
     .contact-card {
         width: 100%;
-        max-width: 260px;
-        margin-left: auto;
-        margin-right: auto;
-        text-align: center;
+        max-width: 165px;
+        margin: 0 auto;
+        padding: 28px 16px;
     }
+
 
     .contacts-page,
     .news-page {
+        width: 100%;
+        padding: 0 8px;
         margin-left: auto;
         margin-right: auto;
         text-align: center;
@@ -746,5 +766,9 @@ footer {
         right: 16px;
         padding: 10px 14px;
         font-size: 0.92rem;
+    }
+
+        .swiper-zoom-container {
+        max-width: 100%;
     }
 }
