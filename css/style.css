@@ -189,7 +189,7 @@ body.dark-theme .menu-close img {
     filter: brightness(0) invert(1);
 }
 
-.menu-close:hover img{:
+.menu-close:hover img{
     opacity: 0.7;
     transform: scale(1.03);
     color: #c64549;
@@ -711,5 +711,20 @@ footer {
     
     .contacts-grid { 
         grid-template-columns: repeat(2, 1fr); 
+        justify-items: center;
+    }
+
+    .contact-card {
+        width: 100%;
+        max-width: 260px;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+    }
+
+    .swiper-zoom-container {
+        width: 100% !important;
+        justify-content: center;
+        align-items: center;
     }
 }
