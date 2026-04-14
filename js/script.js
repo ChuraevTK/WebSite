@@ -306,6 +306,172 @@ function checkScroll() {
     }
 }
 
+/* ========= CUSTOM MOBILE ZOOM ========= */
+function clamp(value, min, max) {
+    return Math.min(Math.max(value, min), max);
+}
+
+function getTouchDistance(t1, t2) {
+    const dx = t2.clientX - t1.clientX;
+    const dy = t2.clientY - t1.clientY;
+    return Math.hypot(dx, dy);
+}
+
+function getTouchMidpoint(t1, t2) {
+    return {
+        x: (t1.clientX + t2.clientX) / 2,
+        y: (t1.clientY + t2.clientY) / 2
+    };
+}
+
+function resetAllCustomZooms() {
+    document.querySelectorAll('.swiper-zoom-container').forEach(container => {
+        if (typeof container.__resetZoom === 'function') {
+            container.__resetZoom(true);
+        }
+    });
+
+    document.body.classList.remove('stop-scrolling');
+
+    if (currentSwiper) {
+        currentSwiper.allowTouchMove = true;
+    }
+}
+
+function attachCustomMobileZoom() {
+    if (!isMobile) return;
+
+    document.querySelectorAll('.swiper-zoom-container').forEach(container => {
+        if (container.dataset.customZoomReady === '1') return;
+
+        const img = container.querySelector('img');
+        if (!img) return;
+
+        container.dataset.customZoomReady = '1';
+
+        const state = {
+            scale: 1,
+            x: 0,
+            y: 0,
+            startScale: 1,
+            startDistance: 0,
+            startMidX: 0,
+            startMidY: 0,
+            startX: 0,
+            startY: 0,
+            panStartX: 0,
+            panStartY: 0
+        };
+
+        const applyTransform = (animate = false) => {
+            img.style.transition = animate ? 'transform 0.22s ease-out' : 'none';
+            img.style.transform = `translate3d(${state.x}px, ${state.y}px, 0) scale(${state.scale})`;
+        };
+
+        const clampTranslation = () => {
+            const rect = container.getBoundingClientRect();
+            const maxX = Math.max(0, (rect.width * state.scale - rect.width) / 2);
+            const maxY = Math.max(0, (rect.height * state.scale - rect.height) / 2);
+
+            state.x = clamp(state.x, -maxX, maxX);
+            state.y = clamp(state.y, -maxY, maxY);
+        };
+
+        const lockOuter = () => {
+            document.body.classList.add('stop-scrolling');
+            if (currentSwiper) currentSwiper.allowTouchMove = false;
+        };
+
+        const unlockOuter = () => {
+            document.body.classList.remove('stop-scrolling');
+            if (currentSwiper) currentSwiper.allowTouchMove = true;
+        };
+
+        const resetZoom = (animate = true) => {
+            state.scale = 1;
+            state.x = 0;
+            state.y = 0;
+            applyTransform(animate);
+            unlockOuter();
+        };
+
+        container.__resetZoom = resetZoom;
+
+        container.addEventListener('touchstart', (e) => {
+            if (e.touches.length === 2) {
+                const [t1, t2] = e.touches;
+                state.startDistance = getTouchDistance(t1, t2);
+                state.startScale = state.scale;
+
+                const mid = getTouchMidpoint(t1, t2);
+                state.startMidX = mid.x;
+                state.startMidY = mid.y;
+
+                state.startX = state.x;
+                state.startY = state.y;
+
+                lockOuter();
+                e.preventDefault();
+            } else if (e.touches.length === 1 && state.scale > 1.01) {
+                const t = e.touches[0];
+                state.panStartX = t.clientX - state.x;
+                state.panStartY = t.clientY - state.y;
+
+                lockOuter();
+                e.preventDefault();
+            }
+        }, { passive: false });
+
+        container.addEventListener('touchmove', (e) => {
+            if (e.touches.length === 2) {
+                const [t1, t2] = e.touches;
+                const distance = getTouchDistance(t1, t2);
+                const mid = getTouchMidpoint(t1, t2);
+
+                state.scale = clamp(state.startScale * (distance / state.startDistance), 1, 3);
+                state.x = state.startX + (mid.x - state.startMidX);
+                state.y = state.startY + (mid.y - state.startMidY);
+
+                clampTranslation();
+                applyTransform(false);
+                lockOuter();
+                e.preventDefault();
+            } else if (e.touches.length === 1 && state.scale > 1.01) {
+                const t = e.touches[0];
+
+                state.x = t.clientX - state.panStartX;
+                state.y = t.clientY - state.panStartY;
+
+                clampTranslation();
+                applyTransform(false);
+                lockOuter();
+                e.preventDefault();
+            }
+        }, { passive: false });
+
+        container.addEventListener('touchend', (e) => {
+            if (e.touches.length === 1 && state.scale > 1.01) {
+                const t = e.touches[0];
+                state.panStartX = t.clientX - state.x;
+                state.panStartY = t.clientY - state.y;
+                e.preventDefault();
+                return;
+            }
+
+            if (e.touches.length === 0 && state.scale > 1.01) {
+                resetZoom(true);
+            } else if (e.touches.length === 0) {
+                unlockOuter();
+            }
+        }, { passive: false });
+
+        container.addEventListener('touchcancel', () => {
+            resetZoom(true);
+        }, { passive: true });
+    });
+}
+/* ========= END CUSTOM MOBILE ZOOM ========= */
+
 function initSwiper(initialSlide = 0) {
     destroySwiper();
 
@@ -335,59 +501,19 @@ function initSwiper(initialSlide = 0) {
             type: 'fraction'
         },
 
-        zoom: {
-            maxRatio: 3,
-            minRatio: 1,
-            toggle: false,
-            panOnMouseMove: false
-        },
-
         on: {
-            zoomChange: function (swiper, scale) {
-                const activeZoom = scale > 1.01;
-
-                swiper.allowTouchMove = !activeZoom;
-
-                if (activeZoom) {
-                    document.body.classList.add('stop-scrolling');
-                    swiper.el.classList.add('is-zooming');
-                } else {
-                    document.body.classList.remove('stop-scrolling');
-                    swiper.el.classList.remove('is-zooming');
-                    swiper.allowTouchMove = true;
-                }
-            },
-
-            touchEnd: function () {
-                const swiper = this;
-
-                if (swiper._zoomResetTimer) {
-                    clearTimeout(swiper._zoomResetTimer);
-                }
-
-                if (swiper.zoom && swiper.zoom.scale > 1.01) {
-                    swiper._zoomResetTimer = setTimeout(() => {
-                        swiper.zoom.out();
-                        swiper.allowTouchMove = true;
-                        document.body.classList.remove('stop-scrolling');
-                        swiper.el.classList.remove('is-zooming');
-                    }, 180);
-                }
+            init: function () {
+                attachCustomMobileZoom();
+                checkScroll();
             },
 
             slideChange: function () {
-                if (this._zoomResetTimer) {
-                    clearTimeout(this._zoomResetTimer);
-                }
+                resetAllCustomZooms();
+                checkScroll();
+            },
 
-                this.zoom.out();
-                this.allowTouchMove = true;
-                document.body.classList.remove('stop-scrolling');
-                this.el.classList.remove('is-zooming');
-
-                if (typeof checkScroll === 'function') {
-                    checkScroll();
-                }
+            transitionEnd: function () {
+                checkScroll();
             }
         }
     });
@@ -395,6 +521,7 @@ function initSwiper(initialSlide = 0) {
     setTimeout(() => {
         if (currentSwiper) {
             currentSwiper.update();
+            attachCustomMobileZoom();
             checkScroll();
         }
     }, 120);
@@ -423,6 +550,8 @@ function closeMenu() {
 }
 
 function showPage(pageId) {
+    resetAllCustomZooms();
+
     document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
     document.getElementById(pageId).classList.add('active');
     closeMenu();
@@ -451,6 +580,8 @@ function setLang(lang) {
 }
 
 function scrollToStart() {
+    resetAllCustomZooms();
+
     if (currentSwiper) {
         currentSwiper.slideTo(0, 400);
     }
@@ -469,6 +600,7 @@ function handleResize() {
             renderChapterDropdown();
         } else if (currentSwiper && document.getElementById('mainPage').classList.contains('active')) {
             currentSwiper.update();
+            attachCustomMobileZoom();
             checkScroll();
         }
     }, 180);
@@ -491,8 +623,19 @@ window.addEventListener('orientationchange', () => {
 
 window.addEventListener('load', () => {
     if (currentSwiper) {
-        setTimeout(() => currentSwiper.update(), 120);
-        setTimeout(() => currentSwiper.update(), 400);
+        setTimeout(() => {
+            if (currentSwiper) {
+                currentSwiper.update();
+                attachCustomMobileZoom();
+            }
+        }, 120);
+
+        setTimeout(() => {
+            if (currentSwiper) {
+                currentSwiper.update();
+                attachCustomMobileZoom();
+            }
+        }, 400);
     }
 });
 

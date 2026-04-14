@@ -68,16 +68,9 @@ body {
 
 body.stop-scrolling {
     overflow: hidden;
-    touch-action: none;
     overscroll-behavior: none;
 }
 
-.comic-swiper.is-zooming,
-.comic-swiper.is-zooming .swiper-slide,
-.comic-swiper.is-zooming .swiper-zoom-container,
-.comic-swiper.is-zooming img {
-    touch-action: none !important;
-}
 
 button {
     background: none;
@@ -408,10 +401,11 @@ body.dark-theme .menu-close img {
     height: auto;
     object-fit: contain;
     border-radius: 10px;
-    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.18);
-    touch-action: pan-x pan-y pinch-zoom !important;
+    box-shadow: none;
     pointer-events: auto;
-    transition: transform 0.3s ease;
+    transition: transform 0.22s ease-out;
+    transform-origin: center center;
+    will-change: transform;
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
     background: var(--bg-card);
@@ -425,6 +419,9 @@ body.dark-theme .menu-close img {
     align-items: center;
     background: transparent !important;
     border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.18);
 }
 
 .swiper-button-next,
@@ -541,6 +538,9 @@ body.dark-theme .scroll-to-top:hover {
     max-width: 900px;
     margin: 40px auto;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .contacts-page h2 {
@@ -557,23 +557,29 @@ body.dark-theme .scroll-to-top:hover {
 
 .contacts-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 25px;
-    padding: 20px;
-    max-width: 1200px;
+    grid-template-columns: repeat(4, minmax(180px, 220px));
+    gap: 22px;
+    width: fit-content;
+    max-width: 100%;
     margin: 0 auto;
+    padding: 0;
+    justify-content: center;
+    align-content: center;
 }
 
 .contact-card {
+    width: 100%;
+    max-width: 220px;
     background: var(--bg-card);
     border: 1px solid var(--border-color);
     border-radius: 20px;
-    padding: 45px 45px;
+    padding: 38px 22px;
     text-decoration: none;
     color: var(--text-primary);
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     gap: 15px;
     cursor: pointer;
     opacity: 0;
@@ -679,8 +685,8 @@ footer {
 }
 
 @media (max-width: 768px) {
-    .logo-main { font-size: 1.2rem; }
-    .logo-sub { font-size: 1.6rem; }
+    .logo-main { font-size: 1.5rem; }
+    .logo-sub { font-size: 2rem; }
 
     .main-container {
         padding: 0 12px;
@@ -715,11 +721,13 @@ footer {
     }
 
     .comic-slide {
-        padding: 8px 0 24px 0;
+        padding: 8px 14px 24px 14px;    
     }
+
     .comic-slide img {
-        max-width: calc(100% - 10px);
+        max-width: 100%;
         max-height: 72vh;
+        box-shadow: none;
     }
 
     .swiper-button-next,
@@ -733,24 +741,20 @@ footer {
         border-radius: 0 16px 16px 0;
     }
 
-    .contacts-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        justify-items: center;
-        align-items: start;
-        gap: 16px;
-        padding: 20px 8px;
-        width: 100%;
-        margin: 0 auto;
-    }
 
+    .contacts-grid {
+        grid-template-columns: repeat(2, minmax(130px, 160px));
+        gap: 16px;
+        width: fit-content;
+        max-width: 100%;
+        margin: 0 auto;
+        padding: 0;
+    }
 
     .contact-card {
-        width: 100%;
-        max-width: 165px;
-        margin: 0 auto;
-        padding: 28px 16px;
+        max-width: 160px;
+        padding: 26px 14px;
     }
-
 
     .contacts-page,
     .news-page {
@@ -768,7 +772,9 @@ footer {
         font-size: 0.92rem;
     }
 
-        .swiper-zoom-container {
+    .swiper-zoom-container {
         max-width: 100%;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.11);
     }
+
 }
