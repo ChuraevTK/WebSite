@@ -102,6 +102,8 @@ footer {
 .site-header {
     min-height: 140px;
     padding: 24px 0;
+    display: flex;
+    align-items: center;
     background-image: url('../images/header/header.jpg');
     background-repeat: repeat-x;
     background-position: center top;
@@ -113,6 +115,7 @@ body.dark-theme .site-header {
 }
 
 .header-inner {
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -782,38 +785,37 @@ body.dark-theme .scroll-to-top:hover {
         --page-shadow: 0 8px 16px rgba(0, 0, 0, 0.24);
     }
 
-@media (max-width: 768px) {
     .site-header {
-        min-height: 96px;
-        padding: 10px 0;
+        min-height: 110px;
+        padding: 14px 0;
     }
 
     .header-inner {
-        padding: 0 10px;
+        padding: 0 12px;
     }
 
     .header-left {
-        gap: 10px;
+        gap: 14px;
     }
 
     .burger-btn {
-        width: 40px;
-        height: 40px;
-        padding: 5px;
+        width: 42px;
+        height: 42px;
+        padding: 6px;
     }
 
     .burger-line {
-        width: 22px;
+        width: 24px;
     }
 
     .logo-main {
-        font-size: 1.5rem;
+        font-size: 1.3rem;
     }
 
     .logo-sub {
-        font-size: 1.8rem;
+        font-size: 1.9rem;
     }
-}
+
     .main-container {
         padding: 0 12px;
         align-items: center;
@@ -900,6 +902,32 @@ body.dark-theme .scroll-to-top:hover {
         bottom: 16px;
         padding: 10px 14px;
         font-size: 0.92rem;
+    }
+
+    .logo-main,
+    .logo-sub {
+        text-shadow:
+            2px 0 0 #ffffff,
+            -2px 0 0 #ffffff,
+            0 2px 0 #ffffff,
+            0 -2px 0 #ffffff,
+            2px 2px 0 #ffffff,
+            -2px -2px 0 #ffffff,
+            2px -2px 0 #ffffff,
+            -2px 2px 0 #ffffff;
+    }
+
+    body.dark-theme .logo-main,
+    body.dark-theme .logo-sub {
+        text-shadow:
+            2px 0 0 #252525,
+            -2px 0 0 #252525,
+            0 2px 0 #252525,
+            0 -2px 0 #252525,
+            2px 2px 0 #252525,
+            -2px -2px 0 #252525,
+            2px -2px 0 #252525,
+            -2px 2px 0 #252525;
     }
 }
 
