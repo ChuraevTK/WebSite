@@ -325,8 +325,12 @@ function getTouchMidpoint(t1, t2) {
 }
 
 function resetAllCustomZooms() {
-    document.querySelectorAll('.swiper-zoom-container').forEach(container => {
-        if (typeof container.__resetZoom === 'function') {
+    const activeSlide = document.querySelector('.swiper-slide-active .swiper-zoom-container');
+    const prevSlide = document.querySelector('.swiper-slide-prev .swiper-zoom-container');
+    const nextSlide = document.querySelector('.swiper-slide-next .swiper-zoom-container');
+
+    [activeSlide, prevSlide, nextSlide].forEach(container => {
+        if (container && typeof container.__resetZoom === 'function') {
             container.__resetZoom(true);
         }
     });
@@ -484,12 +488,13 @@ function initSwiper(initialSlide = 0) {
         initialSlide,
         preloadImages: false,
         updateOnWindowResize: true,
-        observer: true,
-        observeParents: true,
-        observeSlideChildren: true,
-        watchSlidesProgress: true,
         resistanceRatio: 0.85,
         touchStartPreventDefault: false,
+        observer: false,
+        observeParents: false,
+        observeSlideChildren: false,
+        watchSlidesProgress: false,
+        maxBackfaceHiddenSlides: 2,
 
         navigation: {
             nextEl: '.swiper-button-next',

@@ -405,7 +405,6 @@ body.dark-theme .menu-close img {
     pointer-events: auto;
     transition: transform 0.22s ease-out;
     transform-origin: center center;
-    will-change: transform;
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
     background: var(--bg-card);
