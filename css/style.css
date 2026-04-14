@@ -7,8 +7,8 @@
 }
 
 @font-face {
-    font-family: 'Ramona Light';
-    src: url('../fonts/Ramona-Light.ttf') format('truetype');
+    font-family: 'Gravity';
+    src: url('../fonts/Gravity.ttf') format('truetype');
     font-weight: 300;
     font-display: swap;
 }
@@ -52,10 +52,11 @@ body.dark-theme {
 html, body {
     width: 100%;
     max-width: 100%;
+    min-height: 100%;
 }
 
 body {
-    font-family: 'Ramona Light', 'Segoe UI', sans-serif;
+    font-family: 'Gravity', 'Segoe UI', sans-serif;
     background: var(--bg-primary);
     color: var(--text-primary);
     transition: background-color 0.2s ease, color 0.2s ease;
@@ -64,6 +65,13 @@ body {
     margin: 0;
     padding: 0;
     touch-action: pan-y;
+    min-height: 100vh;
+}
+
+#app {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 body.stop-scrolling {
@@ -71,6 +79,14 @@ body.stop-scrolling {
     overscroll-behavior: none;
 }
 
+footer {
+    text-align: center;
+    padding: 30px;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border-color);
+    margin-top: auto;
+    font-size: 0.7rem;
+}
 
 button {
     background: none;
@@ -81,12 +97,16 @@ button {
 
 /* ========== 4. ШАПКА И ЛОГОТИП ========== */
 .site-header {
-    background: var(--bg-secondary);
-    border-bottom: 1px solid var(--border-color);
-    position: sticky;
-    top: 0;
-    z-index: 200;
-    padding: 20px 0;
+    background-image: url('../images/header/header.jpg');
+    background-repeat: repeat-x;
+    background-position: center top;
+    background-size: auto 100%;
+    min-height: 140px;
+    padding: 24px 0;
+}
+
+body.dark-theme .site-header {
+    background-image: url('../images/header/header_d.jpg');
 }
 
 .header-inner {
@@ -112,6 +132,17 @@ button {
     align-items: center;
     justify-content: center;
     gap: 5px;
+
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    background: var(--bg-primary);
+    padding: 8px;
+    transition: all 0.25s ease;
+}
+
+.burger-btn:hover {
+    border-color: var(--accent);
+    transform: scale(1.03);
 }
 
 .burger-line {
@@ -138,6 +169,31 @@ button {
     font-size: 2.5rem;
 }
 
+.logo-main,
+.logo-sub {
+    text-shadow:
+        3px 0 0 #ffffff,
+        -3px 0 0 #ffffff,
+        0 3px 0 #ffffff,
+        0 -3px 0 #ffffff,
+        3px 3px 0 #ffffff,
+        -3px -3px 0 #ffffff,
+        3px -3px 0 #ffffff,
+        -3px 3px 0 #ffffff;
+}
+
+body.dark-theme .logo-main,
+body.dark-theme .logo-sub {
+    text-shadow:
+        3px 0 0 #252525,
+        -3px 0 0 #252525,
+        0 3px 0 #252525,
+        0 -3px 0 #252525,
+        3px 3px 0 #252525,
+        -3px -3px 0 #252525,
+        3px -3px 0 #252525,
+        -3px 3px 0 #252525;
+}
 /* ========== 5. БОКОВОЕ МЕНЮ ========== */
 .side-menu {
     position: fixed;
@@ -153,8 +209,10 @@ button {
     padding: 70px 24px 40px;
     border-right: 1px solid var(--border-color);
     border-radius: 0 20px 20px 0;
-}
 
+    display: flex;
+    flex-direction: column;
+}
 .side-menu.open {
     left: 0;
 }
@@ -202,6 +260,7 @@ body.dark-theme .menu-close img {
     display: flex;
     flex-direction: column;
     gap: 12px;
+    flex: 1;
 }
 
 .menu-divider {
@@ -215,7 +274,7 @@ body.dark-theme .menu-close img {
     background: var(--bg-primary);
     color: var(--text-primary) !important;
     border: 1px solid var(--border-color);
-    font-family: 'Ramona Light', sans-serif;
+    font-family: 'Gravity', sans-serif;
     cursor: pointer;
     transition: all 0.25s ease;
 }
@@ -226,8 +285,9 @@ body.dark-theme .menu-close img {
     font-size: 1rem;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 12px;
+    text-align: left;
 }
 
 .menu-lang-option {
@@ -246,8 +306,8 @@ body.dark-theme .menu-close img {
 }
 
 .menu-icon {
-    width: 20px;
-    height: 20px;
+    width: 25px;
+    height: 25px;
     object-fit: contain;
     transition: filter 0.2s ease;
 }
@@ -260,7 +320,7 @@ body.dark-theme .menu-close img {
 }
 
 .menu-footer {
-    margin-top: 40px;
+    margin-top: auto;
     padding-top: 20px;
     border-top: 1px solid var(--border-color);
     text-align: center;
@@ -268,7 +328,6 @@ body.dark-theme .menu-close img {
     color: var(--text-muted);
     line-height: 1.6;
 }
-
 /* ========== 6. ОСНОВНОЙ КОНТЕНТ ========== */
 .main-container {
     max-width: 1200px;
@@ -308,11 +367,10 @@ body.dark-theme .menu-close img {
     border-radius: 12px;
     padding: 10px 18px;
     font-size: 0.9rem;
-    font-weight: 600;
     color: var(--text-primary);
     cursor: pointer;
     gap: 10px;
-    font-family: 'Ramona Bold', sans-serif;
+    font-family: 'Gravity', sans-serif;
 }
 
 .select-btn:hover {
@@ -420,7 +478,7 @@ body.dark-theme .menu-close img {
     border-radius: 10px;
     overflow: hidden;
     position: relative;
-    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.18);
+    box-shadow: var(--page-shadow);
 }
 
 .swiper-button-next,
@@ -623,6 +681,7 @@ body.dark-theme .scroll-to-top:hover {
 }
 
 .news-page {
+    width: 100%;
     max-width: 700px;
     margin: 40px auto;
     padding: 0 20px;
@@ -642,9 +701,14 @@ body.dark-theme .scroll-to-top:hover {
     border-radius: 12px;
     padding: 24px;
     margin-bottom: 20px;
-    display: block;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     width: 100%;
+    min-width: 100%;
     opacity: 0;
+    box-sizing: border-box;
+    text-align: center;
     transform: translateY(40px);
     animation: slideUpContact 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
@@ -658,7 +722,9 @@ body.dark-theme .scroll-to-top:hover {
 .news-item h3 {
     color: var(--text-primary);
     margin-bottom: 10px;
+    font-size: 1.2rem;
     font-family: 'Ramona Bold', sans-serif;
+    overflow-wrap: anywhere;
 }
 
 .news-date {
@@ -667,16 +733,42 @@ body.dark-theme .scroll-to-top:hover {
     margin-top: 12px;
 }
 
+.news-item p {
+    overflow-wrap: anywhere;
+}
+
 footer {
     text-align: center;
     padding: 30px;
     color: var(--text-muted);
     border-top: 1px solid var(--border-color);
-    margin-top: 50px;
+    margin-top: auto;
     font-size: 0.7rem;
 }
 
+#newsPage.active,
+#contactsPage.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 220px);
+}
+
+#newsPage .main-container,
+#contactsPage .main-container {
+    width: 100%;
+    justify-content: center;
+    transform: translateY(-40px);
+}
+
 /* ========== 10. АДАПТИВНОСТЬ ========== */
+@media (min-width: 769px) {
+    .news-page,
+    .contacts-page {
+        margin-top: 80px;
+    }
+}
+
 @media (max-width: 1024px) {
     .comic-slider-container {
         padding: 0 60px;
@@ -684,8 +776,8 @@ footer {
 }
 
 @media (max-width: 768px) {
-    .logo-main { font-size: 1.3rem; }
-    .logo-sub { font-size: 1.6rem; }
+    .logo-main { font-size: 1.5rem; }
+    .logo-sub { font-size: 2rem; }
 
     .main-container {
         padding: 0 12px;
@@ -771,9 +863,35 @@ footer {
         font-size: 0.92rem;
     }
 
-    .swiper-zoom-container {
-        max-width: 100%;
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.11);
+    :root {
+        --page-shadow: 0 8px 16px rgba(0, 0, 0, 0.11);
     }
 
+    body.dark-theme {
+        --page-shadow: 0 8px 16px rgba(0, 0, 0, 0.24);
+    }
+
+    .swiper-zoom-container {
+        max-width: 100%;
+        box-shadow: var(--page-shadow);
+    }
+}
+
+body.dark-theme {
+    --dim-main: 0.9;
+    --dim-ui: 0.78;
+}
+
+body.dark-theme .site-header,
+body.dark-theme #mainPage,
+body.dark-theme footer {
+    filter: brightness(var(--dim-main));
+}
+
+body.dark-theme .side-menu,
+body.dark-theme .menu-overlay,
+body.dark-theme #newsPage,
+body.dark-theme #contactsPage,
+body.dark-theme .scroll-to-top {
+    filter: brightness(var(--dim-ui));
 }

@@ -234,11 +234,11 @@ function setTheme(theme) {
         const dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         if (dark) {
             document.body.classList.add('dark-theme');
-            if (icon) icon.src = 'images/icons/Луна.svg';
         } else {
             document.body.classList.remove('dark-theme');
-            if (icon) icon.src = 'images/icons/Солнце.svg';
         }
+
+        if (icon) icon.src = 'images/icons/Системная тема.svg';
     }
 
     updateIconColors();
