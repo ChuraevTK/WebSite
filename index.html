@@ -4,159 +4,223 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Хроники пластической хирургии | Эжен Знаменский</title>
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 <div id="app">
-    <div class="site-header">
+    <header class="site-header">
         <div class="header-inner">
             <div class="header-left">
-                <button class="burger-btn" id="burgerBtn" aria-label="Открыть меню">
+                <button class="burger-btn" id="burgerBtn" type="button" aria-label="Открыть меню">
                     <span class="burger-line"></span>
                     <span class="burger-line"></span>
                     <span class="burger-line"></span>
                 </button>
-                <div class="logo" id="homeLogo">
-                    <div class="logo-main">Хроники пластической хирургии</div>
-                    <div class="logo-sub">Эжена Знаменского</div>
-                </div>
+                <button class="logo" id="homeLogo" type="button" aria-label="На главную">
+                    <span class="logo-main">Хроники пластической хирургии</span>
+                    <span class="logo-sub">Эжена Знаменского</span>
+                </button>
             </div>
+
+            <nav class="theme-toggle" id="headerThemeToggle" aria-label="Смена темы">
+                <button class="theme-toggle-segment" type="button" data-theme="light" title="Светлая тема">
+                    <img src="images/icons/Солнце.svg" alt="Светлая">
+                </button>
+                <button class="theme-toggle-segment" type="button" data-theme="dark" title="Тёмная тема">
+                    <img src="images/icons/Луна.svg" alt="Тёмная">
+                </button>
+                <button class="theme-toggle-segment" type="button" data-theme="system" title="Системная тема">
+                    <img src="images/icons/Системная тема.svg" alt="Системная">
+                </button>
+                <span class="theme-toggle-thumb"></span>
+            </nav>
         </div>
-    </div>
+    </header>
 
     <div class="menu-overlay" id="menuOverlay"></div>
 
-    <div class="side-menu" id="sideMenu">
-        <button class="menu-close" id="menuCloseBtn" aria-label="Закрыть меню">
-            <img src="images/icons/крестик.svg" alt="✕"
-                 onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2224%22 height=%2224%22 viewBox=%220 0 24 24%22 fill=%22%239a1a3a%22%3E%3Cpath d=%22M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z%22/%3E%3C/svg%3E'">
+    <aside class="side-menu" id="sideMenu">
+        <button class="menu-close" id="menuCloseBtn" type="button" aria-label="Закрыть меню">
+            <span class="menu-close-icon" aria-hidden="true"></span>
         </button>
 
-        <div class="menu-items">
-            <div class="menu-item" id="homeMenuItem">
-                <img src="images/icons/Домик.svg" class="menu-icon" alt="🏠">
-                На главную
-            </div>
+        <nav class="menu-items">
+            <button class="menu-item" id="homeMenuItem" type="button">
+                <img src="images/icons/Домик.svg" class="menu-icon" alt="">
+                <span id="homeMenuText">На главную</span>
+            </button>
+            <button class="menu-item" id="newsMenuItem" type="button">
+                <img src="images/icons/Новости.svg" class="menu-icon" alt="">
+                <span id="newsMenuText">Новости</span>
+            </button>
+            <button class="menu-item" id="contactsMenuItem" type="button">
+                <img src="images/icons/Контакты.svg" class="menu-icon" alt="">
+                <span id="contactsMenuText">Контакты</span>
+            </button>
 
-            <div class="menu-item" id="newsMenuItem">
-                <img src="images/icons/Новости.svg" class="menu-icon" alt="📰">
-                Новости
-            </div>
-
-            <div class="menu-item" id="contactsMenuItem">
-                <img src="images/icons/Контакты.svg" class="menu-icon" alt="📬">
-                Контакты
-            </div>
-
-            <div class="menu-divider"></div>
+            <hr class="menu-divider">
 
             <div class="menu-lang-group" id="menuLangGroup">
-                <div class="menu-lang-option" data-lang="ru">RU</div>
-                <div class="menu-lang-option" data-lang="en">EN</div>
-                <div class="menu-lang-option" data-lang="de">DE</div>
+                <button class="menu-lang-option" data-lang="ru" type="button">RU</button>
+                <button class="menu-lang-option" data-lang="en" type="button">EN</button>
+                <button class="menu-lang-option" data-lang="de" type="button">DE</button>
             </div>
 
-            <div class="menu-divider"></div>
+            <hr class="menu-divider">
 
-            <div class="menu-item menu-theme" id="menuThemeItem">
-                <img src="images/icons/Системная тема.svg" class="menu-icon" id="themeIconImg" alt="Системная тема">
+            <button class="menu-item menu-theme" id="menuThemeItem" type="button">
+                <img src="images/icons/Системная тема.svg" class="menu-icon" id="themeIconImg" alt="">
                 <span id="themeText">Системная тема</span>
-            </div>
+            </button>
 
-            <div class="menu-footer">© 2026 Эжен Знаменский<br>Все права защищены</div>
-        </div>
-    </div>
+            <footer class="menu-footer">
+                <small id="menuFooterText">© 2026 Эжен Знаменский. Все права защищены.</small>
+            </footer>
+        </nav>
+    </aside>
 
-    <div id="mainPage" class="page active">
-        <div class="main-container">
-            <div class="controls-panel">
-                <div class="issue-selector" id="issueSelector">
-                    <div class="select-btn">
-                        <span id="selectedIssue">Выпуск 1</span>
-                        <span class="arrow">▼</span>
+    <main class="site-main">
+        <section id="mainPage" class="page active">
+            <div class="main-container">
+                <header class="controls-panel">
+                    <div class="issue-selector" id="issueSelector">
+                        <button class="select-btn" type="button">
+                            <span id="selectedIssue">Выпуск 1</span>
+                            <span class="arrow" aria-hidden="true"><img src="images/icons/Стрелка.svg" class="arrow-icon" alt=""></span>
+                        </button>
+                        <div class="select-dropdown" id="issueDropdown"></div>
                     </div>
-                    <div class="select-dropdown" id="issueDropdown"></div>
-                </div>
 
-                <div class="chapter-selector" id="chapterSelector">
-                    <div class="select-btn">
-                        <span id="selectedChapter">Главы</span>
-                        <span class="arrow">▼</span>
+                    <div class="chapter-selector" id="chapterSelector">
+                        <button class="select-btn" type="button">
+                            <span id="selectedChapter">Главы</span>
+                            <span class="arrow" aria-hidden="true"><img src="images/icons/Стрелка.svg" class="arrow-icon" alt=""></span>
+                        </button>
+                        <div class="select-dropdown" id="chapterDropdown"></div>
                     </div>
-                    <div class="select-dropdown" id="chapterDropdown"></div>
+                </header>
+
+                <div class="comic-slider-container">
+                    <div class="swiper comic-swiper" id="comicSwiper">
+                        <div class="swiper-wrapper" id="swiperWrapper"></div>
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-pagination"></div>
+                    </div>
                 </div>
             </div>
+        </section>
 
-            <div class="comic-slider-container">
-                <div class="swiper comic-swiper" id="comicSwiper">
-                    <div class="swiper-wrapper" id="swiperWrapper"></div>
-                    <div class="swiper-button-prev" aria-label="Предыдущая страница"></div>
-                    <div class="swiper-button-next" aria-label="Следующая страница"></div>
-                    <div class="swiper-pagination"></div>
-                </div>
+        <section id="newsPage" class="page">
+            <div class="main-container page-content">
+                <h2 class="page-title" id="newsTitle">Новости</h2>
+
+                <ul class="news-list">
+                    <li class="news-entry">
+                        <a href="#" class="news-card news-link" id="newsIssue1Link">
+                            <span class="news-card-content">
+                                <h3 id="news1Title">Первый выпуск доступен</h3>
+                                <p id="news1Desc">Все страницы первого выпуска уже на сайте. Нажмите, чтобы открыть выпуск.</p>
+                                <time class="news-date" id="news1Date" datetime="2026-03-15">15 марта 2026</time>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    <li class="news-entry news-entry-expandable" id="newsLangEntry">
+                        <button class="news-card news-card-button" id="newsLangToggle" type="button" aria-expanded="false" aria-controls="newsLangDetails">
+                            <span class="news-card-content">
+                                <h3 id="news2Title">Идёт перевод комикса на другие языки</h3>
+                                <p id="news2Desc">Готовятся локализованные версии на английском и немецком языках.</p>
+                            </span>
+                        </button>
+
+                        <div class="news-details-wrap" id="newsLangDetailsWrap">
+                            <div class="news-details-divider" aria-hidden="true"></div>
+                            <div class="news-details" id="newsLangDetails">
+                                <p id="news2More1">Наши переводчики вовсю трудятся над переводом комикса.</p>
+                                <p id="news2More2">После завершения перевода переключение между языковыми версиями будет доступно через меню сайта.</p>
+                            </div>
+                        </div>
+
+                        <div class="news-meta">
+                            <time class="news-date" id="news2Date" datetime="2026-04-10">10 апреля 2026</time>
+                            <span class="news-expand-indicator" aria-hidden="true">
+                                <img src="images/icons/Стрелка.svg" class="arrow-icon news-arrow-icon" alt="">
+                            </span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="contactsPage" class="page">
+            <div class="main-container page-content">
+                <h2 class="page-title" id="contactsTitle">Наши контакты</h2>
+                <p class="page-description" id="contactsDesc">Вопросы, предложения, отзывы — напишите нам!</p>
+
+                <ul class="contacts-grid">
+                    <li>
+                        <a href="mailto:renatakhmerov@yahoo.com" class="contact-card" id="contactEmailLink">
+                            <img src="images/icons/Почта.svg" alt="">
+                            <span>Email</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="" target="_blank" rel="noopener" class="contact-card">
+                            <img src="images/icons/Телеграм.svg" alt="">
+                            <span>Telegram</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="" target="_blank" rel="noopener" class="contact-card">
+                            <img src="images/icons/Инстаграм.svg" alt="">
+                            <span>Instagram</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="" target="_blank" rel="noopener" class="contact-card">
+                            <img src="images/icons/Ватсап.svg" alt="">
+                            <span>WhatsApp</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-brand-block">
+                <p class="footer-brand-title" id="footerBrandText">Хроники пластической хирургии</p>
+            </div>
+
+            <div class="footer-center-block">
+                <p class="footer-support-label" id="footerMenuLabel">Меню</p>
+                <nav class="footer-nav" aria-label="Навигация по сайту">
+                    <a href="#" id="footerHomeLink">Главная</a>
+                    <a href="#" id="footerNewsLink">Новости</a>
+                    <a href="#" id="footerContactsLink">Контакты</a>
+                </nav>
+                <p class="footer-copy" id="footerText">© Хроники пластической хирургии Эжена Знаменского. Все права защищены.</p>
+            </div>
+
+            <div class="footer-right-block">
+                <p class="footer-support-row">
+                    <span class="footer-support-label" id="footerContactLabel">Контакты</span>
+                </p>
+                <p class="footer-support-row footer-support-row--email">
+                    <a href="mailto:renatakhmerov@yahoo.com" id="footerEmailLink">renatakhmerov@yahoo.com</a>
+                    <span class="footer-mail-icon-wrap" aria-hidden="true">
+                        <img src="images/icons/Почта.svg" class="footer-mail-icon" alt="">
+                    </span>
+                </p>
             </div>
         </div>
-    </div>
-
-    <div id="newsPage" class="page">
-        <div class="main-container">
-            <div class="news-page">
-                <h2 id="newsTitle">Новости</h2>
-
-                <div class="news-item">
-                    <h3 id="news1Title">Второй выпуск в разработке</h3>
-                    <p id="news1Desc">Работа над продолжением идет полным ходом.</p>
-                    <div class="news-date" id="news1Date">15 марта 2026</div>
-                </div>
-
-                <div class="news-item">
-                    <h3 id="news2Title">Первый выпуск доступен для чтения</h3>
-                    <p id="news2Desc">Все страницы первого выпуска уже на сайте.</p>
-                    <div class="news-date" id="news2Date">1 марта 2026</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="contactsPage" class="page">
-        <div class="main-container">
-            <div class="contacts-page">
-                <h2 id="contactsTitle">Связь с автором</h2>
-                <p id="contactsDesc">Вопросы, предложения, отзывы — напишите мне!</p>
-
-                <div class="contacts-grid">
-                    <a href="mailto:znamensky@example.com" class="contact-card">
-                        <img src="images/icons/Почта.svg" alt="📧">
-                        <span>Email</span>
-                    </a>
-
-                    <a href="https://t.me/znamensky" target="_blank" class="contact-card">
-                        <img src="images/icons/Телеграм.svg" alt="💬">
-                        <span>Telegram</span>
-                    </a>
-
-                    <a href="https://instagram.com/znamensky" target="_blank" class="contact-card">
-                        <img src="images/icons/Инстаграм.svg" alt="📸">
-                        <span>Instagram</span>
-                    </a>
-
-                    <a href="https://wa.me/71234567890" target="_blank" class="contact-card">
-                        <img src="images/icons/Ватсап.svg" alt="📱">
-                        <span>WhatsApp</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <footer>
-        <p id="footerText">© 2026 Эжен Знаменский — медицинские хроники</p>
     </footer>
 </div>
 
-<button class="scroll-to-top" id="scrollToTopBtn">В начало</button>
+<button class="scroll-to-top" id="scrollToTopBtn" type="button">В начало</button>
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script src="js/script.js"></script>
